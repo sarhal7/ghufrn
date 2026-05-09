@@ -16,18 +16,22 @@ function Cursor() {
     }
 
     const targets = document.querySelectorAll('a, button, .magnetic, video')
+    const listeners = []
     targets.forEach((el) => {
-      el.addEventListener('mouseenter', () => toggleHover(true))
-      el.addEventListener('mouseleave', () => toggleHover(false))
+      const onEnter = () => toggleHover(true)
+      const onLeave = () => toggleHover(false)
+      listeners.push({ el, onEnter, onLeave })
+      el.addEventListener('mouseenter', onEnter)
+      el.addEventListener('mouseleave', onLeave)
     })
 
     window.addEventListener('pointermove', move)
 
     return () => {
       window.removeEventListener('pointermove', move)
-      targets.forEach((el) => {
-        el.removeEventListener('mouseenter', () => toggleHover(true))
-        el.removeEventListener('mouseleave', () => toggleHover(false))
+      listeners.forEach(({ el, onEnter, onLeave }) => {
+        el.removeEventListener('mouseenter', onEnter)
+        el.removeEventListener('mouseleave', onLeave)
       })
     }
   }, [])

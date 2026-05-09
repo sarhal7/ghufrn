@@ -79,7 +79,7 @@ function App() {
               animate={{ letterSpacing: '0.6em', opacity: 1 }}
               transition={{ duration: 1.1, ease: 'easeInOut' }}
             >
-              GHUFRN
+              GHUFRAN
             </motion.span>
           </motion.div>
         )}

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import Particles from '@tsparticles/react'
 import { loadSlim } from '@tsparticles/slim'
@@ -15,9 +15,9 @@ const textVariants = {
 function Hero() {
   const [offset, setOffset] = useState({ x: 0, y: 0 })
 
-  const particlesInit = async (engine) => {
+  const particlesInit = useCallback(async (engine) => {
     await loadSlim(engine)
-  }
+  }, [])
 
   const options = useMemo(
     () => ({
@@ -34,12 +34,12 @@ function Hero() {
     [],
   )
 
-  const onMove = (event) => {
+  const onMove = useCallback((event) => {
     const { innerWidth, innerHeight } = window
     const x = (event.clientX / innerWidth - 0.5) * 18
     const y = (event.clientY / innerHeight - 0.5) * 18
     setOffset({ x, y })
-  }
+  }, [])
 
   return (
     <section className="hero" onMouseMove={onMove}>
